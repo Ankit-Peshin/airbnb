@@ -630,7 +630,7 @@ alluvial( filteredColumnsByFreq[,1:3], freq=filteredColumnsByFreq$Freq, alpha=0.
 The Airbnb dataset provides us with a fantastic source to better understand New York's bustling rental landscape. With over 50k listings registered in the last 9 years, New York has proven to be one of Airbnb's fastest growing cities. Between 2010 and 2014, as more and more people adopted the use of the internet as a service provider, the number of listings doubled every year. A prediction of 70k listings by 2020 shoudn't be very far off. Downtown Manhattan and the adjacent parts of Brooklyn had by far the highest concentration of listings. Staten Island and Bronx have been slow adopters. This animation we developed does a good job of visualizing Airbnb's host network growth.
 
 <video width="1000" height="1000" loop autoplay muted>
-  <source src="./maps/movie.mp4" type="video/mp4">
+  <source src="videos/movie.mp4" type="video/mp4">
 </video>
 
 
@@ -676,7 +676,7 @@ Understanding your customers is key to running a successful business. The custom
 Our tool built in RShiny also allows us to query terms to find dominant associated themes. For instance, a search for "linens" returned descriptors such as “stained”, smelled” (negatives), and others such as “crisp”, “fluffy”, “spotless”, “new”, “comfy”, “fresh”, etc. (positives).
 
 <video width="1000" height="1000" loop autoplay muted>
-  <source src="wordcloud_video.mov" type="video/mp4">
+  <source src="videos/wordcloud_video.mov" type="video/mp4">
 </video>
 
 Link to the animation
