@@ -9,3 +9,5 @@ i). We are still in the process of uploading all data files. We're looking for w
 
 ii). The data files that have been uploaded are compressed versions since they exceed Github's 100Mb limit. You'll need to extract these files before you run the code.
 
+We'll resolve these issues in a couple days tops. Keep Hacking!
+
