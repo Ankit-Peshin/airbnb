@@ -1,5 +1,4 @@
-# airbnb
-Project analyzing Airbnb Rental data
+# Analyzing Airbnb Rentals Dataset
 
 Welcome to the Exploratory Analysis of the Airbnb Dataset! You can let us know if something isn't clear at any one of these addresses : ap3772@columbia.edu (Ankit), sg3637@columbia.edu (Sarang) and aa4229@columbia.edu (Ankita). 
 
