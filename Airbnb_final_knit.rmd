@@ -28,9 +28,9 @@ We are a team of three - Ankit Peshin, Sarang Gupta, and Ankita Agrawal. We pres
 
 All of us had a deep sense of teamwork and communicated well with each other. We were successful in acknowledging and appreciating each other's efforts while at the same time corrected each other along the way. As a team, we invested a lot of time in discussing and brainstorming ideas - from selecting the dataset to compiling the final version of this report.
 
-The work was divided such that each of us worked on equally difficult and challenging tasks. To highlight a few contributions, Ankita worked on the the word cloud to derive meaning from customer reviews, led the development of the listings locator and was instrumental in giving a general structure to our analysis, making sense from the chaos. Ankit introduced word embeddings to analyze review data, and worked on the Shiny app to filter listings and another one to build a wordcloud of similar terms. Sarang produced a cool animation showing the rise in the number of Airbnb rentals in NYC over the years, and performed some interesting time-series investigation.
+The work was divided such that each of us worked on equally difficult and challenging tasks. To highlight a few contributions, Ankita worked on word cloud to derive meaning from customer reviews, led the development of the listings locator and was instrumental in giving a general structure to our analysis, making sense from the chaos. Ankit introduced word embeddings to analyze review data, and worked on the Shiny app to filter listings and another one to build a wordcloud of similar terms. Sarang produced a cool animation showing the rise in the number of Airbnb rentals in NYC over the years, and performed some interesting time-series investigation.
 
-Static visualizations were also distributed such that each one of us gets to work with the entire data set and thus be able to help with issues faced by other team members and accelerate productivity. It was a highly collaborative effort where our work went through a review process and Github's version control was convenient. 
+Static visualizations were also distributed such that each one of us gets to work with the entire data set and thus be able to help with issues faced by other team members and accelerate productivity. It was a highly collaborative effort where our work went through a review process and Github's version control was convenient.
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -619,7 +619,29 @@ alluvial( filteredColumnsByFreq[,1:3], freq=filteredColumnsByFreq$Freq, alpha=0.
 
 5. Lastly, it can also be observed that there are no unique patterns observed between super host and regular host and they seem to display a similar behavior for the features we are inspecting here.
 
-*** 
+***
+
+###Executive Summary
+
+The Airbnb dataset provides us with a fantastic source to better understand New York's bustling rental landscape. With over 50k listings registered in the last 9 years, New York has proven to be one of Airbnb's fastest growing cities. Between 2010 and 2014, as more and more people adopted the use of the internet as a service provider, the number of listings doubled every year. A prediction of 70k listings by 2020 shoudn't be very far off. Downtown Manhattan and the adjacent parts of Brooklyn had by far the highest concentration of listings. Staten Island and Bronx have been slow adopters. This animation we developed does a good job of visualizing Airbnb's host network growth.
+
+<video width="1000" height="1000" loop autoplay muted>
+  <source src="./maps/movie.mp4" type="video/mp4">
+</video>
+
+
+#####Location,Location,Location!
+
+They say there are three things that matter in property; Location, location and location. And we're here to say YES. Highly rated locations also tend to be the most expensive ones. Again downtown Manhattan and adjacent areas of Brooklyn receive the highest location scores, with East Village being an exception. A marked drop in location scores is seen as the subway lines end. 
+
+The listing costs are largely in line with the Location scores. It is however interesting to spot a few outliers :
+i). *Find high rating - low rent regions (best of both worlds)* : The State Park region in Staten Island (discussed in the previous graph) is one such region where rents tend to be fairly low despite having the highest location rating. Another such sweet-spot lies to the North East of Brooklyn.
+ii). *Find low rating - high rent regions (worst of both worlds)* : The Elm Park region of Staten Island has disproportionately high rents, yet very low location scores. Other such locations can be found towards the Northern Bronx regions.
+
+
+
+
+***
 
 ###Interactive Components
 
