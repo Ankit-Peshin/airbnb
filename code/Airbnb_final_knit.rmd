@@ -56,12 +56,12 @@ library(gridExtra)
 source("https://raw.githubusercontent.com/iascchen/VisHealth/master/R/calendarHeat.R")
 options(scipen=999)
 #http://insideairbnb.com/get-the-data.html
-listings <- read_csv("data/listings.csv")
-reviews1 <- read_csv("data/reviews1.csv")
-reviews2 <- read_csv("data/reviews2.csv")
+listings <- read_csv("./data/listings.csv")
+reviews1 <- read_csv("./data/reviews1.csv")
+reviews2 <- read_csv("./data/reviews2.csv")
 reviews <- rbind(reviews1, reviews2)
-calendar <- read_csv("data/calendar.csv")
-neighborhood <- read_csv("data/neighbourhoods.csv")
+calendar <- read_csv("./data/calendar.csv")
+neighborhood <- read_csv("./data/neighbourhoods.csv")
 ```
 
 *** 
@@ -112,7 +112,7 @@ We construct a ```visna``` plot to analyze the missing values for the variables 
 
 
 ```{r fig.height=5, echo=FALSE, message=FALSE, warning=FALSE}
-listingdf1 <- read.csv('data/listings.csv')
+listingdf1 <- read.csv('./data/listings.csv')
 missingdata<-listingdf1
 missingdata[missingdata == ""] <- NA
 missingdata <- missingdata %>% select(host_is_superhost,neighbourhood_group_cleansed,review_scores_rating,host_response_time,name,host_since,zipcode)
@@ -147,7 +147,7 @@ This section will explore various variables from our dataset using spatial visua
 ```{r Spatial Data 1.1, echo=FALSE, message=FALSE, warning=FALSE}
 
 #Reading Listings Data
-listingdf <- read.csv('data/listings.csv')
+listingdf <- read.csv('./data/listings.csv')
 
 #Creating Listings across NYC
 leaflet(listingdf) %>%
@@ -345,9 +345,9 @@ After observing the pattern in the demand, we wanted to investigate whether the 
 
 ```{r Demand/Price Analysis 2.3, echo=FALSE, message=FALSE, warning=FALSE}
 
-calendar2016 <- read_csv("data/calendar2016.csv")
-calendar2017 <- read_csv("data/calendar2017.csv")
-calendar2018 <- read_csv("data/calendar.csv")
+calendar2016 <- read_csv("./data/calendar2016.csv")
+calendar2017 <- read_csv("./data/calendar2017.csv")
+calendar2018 <- read_csv("./data/calendar.csv")
 
 combinedCalendar <- rbind(calendar2016, calendar2017, calendar2018)
 combinedCalendar$price <- as.numeric(gsub(",", "", substring(combinedCalendar$price, 2)))
@@ -416,7 +416,7 @@ From the above calendar heatmap for 2018 - 2019, we can infer that January tends
 The dataset provides us with a ton of data, but nothing as insightful and close to the customer as their reviews/feedback. If mined properly, they can tell us a lot about the customer mindset, their expectations and how well those were met. For the final result to make sense, the review text data requires a lot of cleaning - eg. the words need to be stemmed, commas-fullstops-percentages etc need to be removed, common English words and stop words need to be removed etc.
 
 ```{r wordcloud 3.1, echo=FALSE, message=FALSE, warning=FALSE}
-sampledreviews <- read_csv('data/sampledreviews.csv')
+sampledreviews <- read_csv('./data/sampledreviews.csv')
 
 splitsampledreviewscoloumn <- unlist(strsplit(as.character(sampledreviews$reviews), split=" "))
 reviewsWordDF <- data.frame("word" = splitsampledreviewscoloumn)
@@ -583,7 +583,7 @@ Our goal is to understand owners’ behavior with respect to these policies and 
 ```{r fig.width=10, echo=FALSE, message=FALSE, warning=FALSE }
 library(alluvial)
 library(readr)
-listingdf1 <- read_csv('data/listings.csv')
+listingdf1 <- read_csv('./data/listings.csv')
 filteredColumns <- listingdf1 %>% select(instant_bookable,cancellation_policy, room_type,host_is_superhost)
 filteredColumns <- filteredColumns %>% filter(filteredColumns$host_is_superhost != "")
 filteredColumnsByFreq <-  filteredColumns %>% group_by(instant_bookable,cancellation_policy,room_type,host_is_superhost) %>% summarize(Freq = n())
@@ -630,7 +630,7 @@ alluvial( filteredColumnsByFreq[,1:3], freq=filteredColumnsByFreq$Freq, alpha=0.
 The Airbnb dataset provides us with a fantastic source to better understand New York's bustling rental landscape. With over 50k listings registered in the last 9 years, New York has proven to be one of Airbnb's fastest growing cities. Between 2010 and 2014, as more and more people adopted the use of the internet as a service provider, the number of listings doubled every year. A prediction of 70k listings by 2020 shoudn't be very far off. Downtown Manhattan and the adjacent parts of Brooklyn had by far the highest concentration of listings. Staten Island and Bronx have been slow adopters. This animation we developed does a good job of visualizing Airbnb's host network growth.
 
 <video width="1000" height="1000" loop autoplay muted>
-  <source src="videos/movie.mp4" type="video/mp4">
+  <source src="./videos/movie.mp4" type="video/mp4">
 </video>
 
 
@@ -676,7 +676,7 @@ Understanding your customers is key to running a successful business. The custom
 Our tool built in RShiny also allows us to query terms to find dominant associated themes. For instance, a search for "linens" returned descriptors such as “stained”, smelled” (negatives), and others such as “crisp”, “fluffy”, “spotless”, “new”, “comfy”, “fresh”, etc. (positives).
 
 <video width="1000" height="1000" loop autoplay muted>
-  <source src="videos/wordcloud_video.mov" type="video/mp4">
+  <source src="./videos/wordcloud_video.mov" type="video/mp4">
 </video>
 
 Link to the animation
@@ -745,7 +745,7 @@ Link to the animation
 Airbnb’s first New York listing was in Harlem in the year 2008, and the growth since has been exponential. This animation helps visualize Airbnb’s growth in New York over the years. Around 600 properties were added in the first couple years, mostly in Manhattan and Brooklyn.  Downtown Manhattan and close lying areas in Brooklyn have always had high Airbnb presence. The number of listings has roughly doubled each year since then. By the year 2015, every neighborhood of Manhattan had a multiple listings. Interestingly Bronx has very few listings, so few that the Manhattan-Bronx border can be seen in the animation by the sudden drop in listings. Since 2016, Airbnb listings have spread to parts of Staten Island. The animation also makes it easy to see the trend in listing counts; a prediction of 70k properties by 2020 shouldn’t be far off.
 
 <video width="1000" height="1000" loop autoplay muted>
-  <source src="./maps/movie.mp4" type="video/mp4">
+  <source src="./videos/movie.mp4" type="video/mp4">
 </video>
 
 Link to the animation
