@@ -24,6 +24,8 @@ We are a team of three - Ankit Peshin, Sarang Gupta, and Ankita Agrawal. We pres
 * Do regular hosts and super hosts have different cancellation and booking policies?
 * Are there any common themes that can be identified from the free-text section of the reviews? What aspects of the rental experience do people like and what aspects do they abhor?
 
+**The project is available on Github**:[`https://github.com/Ankit-Peshin/airbnb.git`](https://github.com/Ankit-Peshin/airbnb.git){target="_blank"}
+
 ### Contributions
 
 All of us had a deep sense of teamwork and communicated well with each other. We were successful in acknowledging and appreciating each other's efforts while at the same time corrected each other along the way. As a team, we invested a lot of time in discussing and brainstorming ideas - from selecting the dataset to compiling the final version of this report.
@@ -50,6 +52,7 @@ library(stringr)
 library(zipcode)
 library(leaflet)
 library(extracat)
+library(gridExtra)
 source("https://raw.githubusercontent.com/iascchen/VisHealth/master/R/calendarHeat.R")
 options(scipen=999)
 #http://insideairbnb.com/get-the-data.html
@@ -157,7 +160,8 @@ leaflet(listingdf) %>%
 &nbsp;
 
 Link to the animation 
-```http://sarang-gupta.000webhostapp.com/listingAnimation.html ```
+[`http://sarang-gupta.000webhostapp.com/listingAnimation.html`](http://sarang-gupta.000webhostapp.com/listingAnimation.html){target="_blank"}
+
 
 
 This is the basic interactive graph with all the listing in New York City appearing in a clustered fashion. You can click on clusters to see the listing it comprises. This gives a zoom-in view. You can further click on each listing to see details like Listing Name, Host Name, Price of the property, Property Type, Room Type. This visualization helps to explore every listing geographically. It gives the overall sense of how the listings are distributed across neighborhood. We can see from the map that maximum listing are clustered around Manhattan and Brooklyn region, followed by Queens, Bronx and the least number of listing are in Staten Island.
@@ -172,7 +176,7 @@ colnames(zipReviews) <- c("region","value")
 zipReviews$region <- as.character(zipReviews$region)
 nyc_fips = c(36005, 36047, 36061, 36081, 36085)
 
-zip_choropleth(zipReviews,
+g_locations <- zip_choropleth(zipReviews,
 county_zoom = nyc_fips,
 title = "Location Review Scores by Region",
 legend = "Average Score") + ggtitle("Which area is the best?",
@@ -180,6 +184,8 @@ legend = "Average Score") + ggtitle("Which area is the best?",
   theme(plot.title = element_text(face = "bold")) +
   theme(plot.subtitle = element_text(face = "bold", color = "grey35")) +
   theme(plot.caption = element_text(color = "grey68"))+scale_color_gradient(low="#d3cbcb", high="#852eaa")+ scale_fill_brewer("Location Review Score",palette=3)
+
+g_locations
 
 ```
 
@@ -195,7 +201,7 @@ colnames(zipPrices) <- c("region","value")
 zipPrices$region <- as.character(zipPrices$region)
 nyc_fips = c(36005, 36047, 36061, 36081, 36085)
 
-zip_choropleth(zipPrices,
+g_price_location <- zip_choropleth(zipPrices,
 county_zoom = nyc_fips,
 title = "Average Price by Region",
 legend = "Average Score") + ggtitle("Which area is expensive?",
@@ -203,6 +209,8 @@ legend = "Average Score") + ggtitle("Which area is expensive?",
   theme(plot.title = element_text(face = "bold")) +
   theme(plot.subtitle = element_text(face = "bold", color = "grey35")) +
   theme(plot.caption = element_text(color = "grey68"))+scale_color_gradient(low="#d3cbcb", high="#852eaa")+ scale_fill_brewer("Average Price",palette=4)
+
+g_price_location
 
 ```
 
@@ -306,7 +314,7 @@ ggplot(reviewsNum[year(reviewsNum$date) == 2017,], aes(date, number)) +
   theme(plot.subtitle = element_text(face = "bold", color = "grey35")) +
   theme(plot.caption = element_text(color = "grey68"))
 
-ggplot(reviewsNum[year(reviewsNum$date) == 2018,], aes(date, number)) +
+demand2018 <- ggplot(reviewsNum[year(reviewsNum$date) == 2018,], aes(date, number)) +
            geom_point(na.rm=TRUE, color = "#007A87", alpha=0.5) +geom_smooth(color = "#FF5A5F")+
   ggtitle("Seasonality in Demand",
           subtitle = "Number of Reviews across Months in 2018") +
@@ -315,13 +323,16 @@ ggplot(reviewsNum[year(reviewsNum$date) == 2018,], aes(date, number)) +
   theme(plot.subtitle = element_text(face = "bold", color = "grey35")) +
   theme(plot.caption = element_text(color = "grey68"))
 
+demand2018
+
 ```
 
 The dots in the above graph reflect the number of reviews written on a particular date, which as per our assumption reflects the demand. There seems to be a consistent pattern in how demand fluctuates across the year, which is reflected in each of the graphs shown above. The demand is lowest in January and increases until October, when it begins to falls until the end of the year.
 
 We inferred that this could possibly be due to the holiday season kicking in, with people celebrating Thanksgiving and Christmas at home with their family, leading to a slump in tourism and hence the demand for tourist lodging. To confirm our findings, we surveyed the data from the **National Tourism and Travel Office (NTTO)** website and observed a similar pattern in number of non-resident arrivals to the US (NYC as the port of entry) across the year. The number of arrivals were the lowest lowest in January, increasing until October and the beginning to decline from November until the end of the year (unfortunately we could not find statistics on the domestic arrivals to NYC). 
 
-The data can be accessed through the below link: ```https://travel.trade.gov/view/m-2017-I-001/index.asp ```
+The data can be accessed through the below link: [`https://travel.trade.gov/view/m-2017-I-001/index.asp`](https://travel.trade.gov/view/m-2017-I-001/index.asp){target="_blank"}
+
 
 
 #### How is Airbnb priced across the year?
@@ -543,9 +554,9 @@ l1$host_is_superhost <- factor(l1$host_is_superhost)
 colnames(num_reviews) = c("id","sum")
 l1 = merge(l1, num_reviews, by = "id")
 colnames(l1)[which(names(l1) == "host_is_superhost")] <- "Superhost"
-g = ggplot(l1,aes(host_response_rate,review_scores_rating,color=Superhost))+geom_point(alpha = .5,stroke=0) +xlab("Host Response Rate") +ylab("Avg Ratings")+ ggtitle("What does it take to be a Super Host")
+superhost = ggplot(l1,aes(host_response_rate,review_scores_rating,color=Superhost))+geom_point(alpha = .5,stroke=0) +xlab("Host Response Rate") +ylab("Avg Ratings")+ ggtitle("What does it take to be a Super Host")
 
-g + ggtitle("What does it take to be a Superhost?",
+superhost + ggtitle("What does it take to be a Superhost?",
           subtitle = "Average Rating by Response Rate") +
   theme(plot.title = element_text(face = "bold")) +
   theme(plot.subtitle = element_text(face = "bold", color = "grey35")) +
@@ -621,25 +632,55 @@ The Airbnb dataset provides us with a fantastic source to better understand New 
 </video>
 
 
+
 #####Demand and Supply : Airbnb Customer Growth vs Listing Prices over time
 
-While there is an overall increasing trend for both customer numbers and listing prices, some very interesting seasonal patterns present themselves. The number of customer reviews written at a given timestamp are a good indicator of the demand around that time. As the adopters of Airbnb increase, one would expect the number of reviews to also increase through Jan to Dec every year, however we notice an interesting trend. The number of reviews coming in tend to peak around October every year and there is a marked drop towards the year end. The Holidays seem to be a reasonable explanation for this decline. Listing prices on the other hand increase from January through April where they plateau until November. The year end sees a sudden uptick in prices of around 12% by New Year. This gain is negated within a few days into January.
+While there is an overall increasing trend for both customer numbers and listing prices, some very interesting seasonal patterns present themselves. The number of customer reviews written at a given timestamp are a good indicator of the demand around that time. As the adopters of Airbnb increase, one would expect the number of reviews to also increase through Jan to Dec every year, however we notice an interesting trend. The number of reviews tend to peak around October every year and there is a marked drop towards the year end. The Holidays seem to be a reasonable explanation for this decline. Listing prices on the other hand increase from January through April where they plateau until November. The year end sees a sudden uptick in prices of around 12% by New Year. This gain is negated within a few days into January.
 
-Talking about weekly trends, the prices remain fairly constant through the week days and marginally increase around the weekend.
+Talking about weekly trends, the prices remain fairly constant through the week days but tend increase around the weekend.
 
-#####Location,Location,Location! : Understanding New York's Real Estate scene  
+```{r fig.width=10, echo=FALSE, message=FALSE, warning=FALSE }
+
+price2018 <- ggplot(groupedCalendarAll[year(groupedCalendarAll$date) == 2018,], aes(commonYear, averagePrice)) +
+           geom_point(na.rm=TRUE, alpha=0.5, color = "#007A87") + geom_smooth(color = "#FF5A5F")+
+  ggtitle("Seasonality in Price",
+          subtitle = "Average listing price across Months in 2018") +
+  labs(x = "Month", y = "Average price across Listings") +
+  theme(plot.title = element_text(face = "bold")) +
+  theme(plot.subtitle = element_text(face = "bold", color = "grey35")) +
+  theme(plot.caption = element_text(color = "grey68")) + scale_x_date(labels = date_format("%b"))
+
+
+grid.arrange(demand2018, price2018, ncol=2)
+
+```
+
+#####Location, Location, Location! : Understanding New York's Real Estate scene  
 
 They say there are three things that matter in property; Location, location and location. And we're here to say YES. Highly rated locations also tend to be the most expensive ones. Again downtown Manhattan and adjacent areas of Brooklyn receive the highest location scores, with East Village being an exception. A marked drop in location scores is seen as the subway lines end. 
 
-The listing costs are largely in line with the Location scores. It is however interesting to spot a few outliers :
+The listing costs are largely in line with the location scores. It is however interesting to spot a few outliers :
 i). *Find high rating - low rent regions (best of both worlds)* : The State Park region in Staten Island (discussed in the previous graph) is one such region where rents tend to be fairly low despite having the highest location rating. Another such sweet-spot lies to the North East of Brooklyn.
 ii). *Find low rating - high rent regions (worst of both worlds)* : The Elm Park region of Staten Island has disproportionately high rents, yet very low location scores. Other such locations can be found towards the Northern Bronx regions.
+
+```{r fig.width=10, echo=FALSE, message=FALSE, warning=FALSE }
+grid.arrange(g_locations, g_price_location, ncol=2)
+```
 
 #####Getting into the Customer's Head : Analyzing Customer Reviews
 
 Understanding your customers is key to running a successful business. The customer reviews can provide a wealth of information if mined properly. Some dominant positive themes that made people "comfortable" were cleanliness, the neighbourhood and if certain places were "walkable". "Hosts" and "communication" feature prominently, and bed-sheets and linens leave a decisive impression if unclean. Similarly, a few themes weren't pleasurable for the guest are room size (described by "small","stuffy","claustrophobic"), temperature/heating issues ("cold","hot","damp") and safety issues ("nervous","unsafe","stressful"),
 
 Our tool built in RShiny also allows us to query terms to find dominant associated themes. For instance, a search for "linens" returned descriptors such as “stained”, smelled” (negatives), and others such as “crisp”, “fluffy”, “spotless”, “new”, “comfy”, “fresh”, etc. (positives).
+
+<video width="1000" height="1000" loop autoplay muted>
+  <source src="wordcloud_video.mov" type="video/mp4">
+</video>
+
+Link to the animation
+[`http://sarang-gupta.000webhostapp.com/wordCloudAnimation.html`](http://sarang-gupta.000webhostapp.com/wordCloudAnimation.html){target="_blank"}
+
+
 
 #####Hosts with Super Powers! : Analyzing what it takes to become a Superhost
 
@@ -649,7 +690,15 @@ But what does it take to be a Superhost? Airbnb’s site has a set of requiremen
 
 With that being said, most Airbnb hosts lie in the high-rating:high-response region, but only a small fraction get to be super hosts. So clearly, becoming a Superhost takes a lot more than high ratings & response rates.
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE }
 
+superhost + ggtitle("What does it take to be a Superhost?",
+          subtitle = "Average Rating by Response Rate") +
+  theme(plot.title = element_text(face = "bold")) +
+  theme(plot.subtitle = element_text(face = "bold", color = "grey35")) +
+  theme(plot.caption = element_text(color = "grey68"))
+
+```
 ***
 
 ###Interactive Components
@@ -661,7 +710,8 @@ This section however is all about giving the user the power to identify patterns
 
 ####Airbnb Listing Locator 
 Link to the animation
-```https://ankitpeshin.shinyapps.io/listings/ ```
+[`https://ankitpeshin.shinyapps.io/listings/`](https://ankitpeshin.shinyapps.io/listings/){target="_blank"}
+
 
 Our first interactive component is a **Airbnb Listing Locator**, which displays all the listings on a map that satisfy the user requirements. Here are the parameters that the user can control and filter on:
 
@@ -686,7 +736,7 @@ Clicking on a listing gives further details of the form : “name of listing”,
 &nbsp;
 
 Link to the animation
-```https://ankitpeshin.shinyapps.io/listings/ ```
+[`https://ankitpeshin.shinyapps.io/listings/`](https://ankitpeshin.shinyapps.io/listings/){target="_blank"}
 
 ####Airbnb Network Growth over the years (Animation)
 
@@ -697,12 +747,13 @@ Airbnb’s first New York listing was in Harlem in the year 2008, and the growth
 </video>
 
 Link to the animation
-```http://sarang-gupta.000webhostapp.com/listingGrowth.html ```
+[`http://sarang-gupta.000webhostapp.com/listingGrowth.html`](http://sarang-gupta.000webhostapp.com/listingGrowth.html){target="_blank"}
+
 
 ####Airbnb Word Cloud Generator
 
 Link to the animation
-```https://ankitpeshin.shinyapps.io/wordcloud_generator/ ```
+[`https://ankitpeshin.shinyapps.io/wordcloud_generator/ `](https://ankitpeshin.shinyapps.io/wordcloud_generator/ ){target="_blank"}
 
 This Shiny App serves as an extension to our previous Word-Vector analysis of the customer reviews.  Once the word vector has been built, anyone can query the vector to find “similar” words and build a word-cloud. User can enter any valid query word and set the “max words” in the word cloud. A valid query word would be one that is present in the corpus, else it wouldn’t be part of the word vector. It is easy to think of such words; for instance let us generate the word cloud for “linens”.
 
@@ -716,7 +767,7 @@ The WordCloud generator presents interesting insights. The obvious words like �
 Querying over “bathroom” with a larger number of “max words” returns a more detailed summary. Again, the possibilities are endless; just keep querying the word cloud generator to get new insights.
 
 Link to the animation
-```https://ankitpeshin.shinyapps.io/wordcloud_generator/ ```
+[`https://ankitpeshin.shinyapps.io/wordcloud_generator/`](https://ankitpeshin.shinyapps.io/wordcloud_generator/){target="_blank"}
 
 
 ***
