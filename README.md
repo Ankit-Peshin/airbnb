@@ -1,12 +1,17 @@
 # Analyzing Airbnb Rentals Dataset
 
-Welcome to the Exploratory Analysis of the Airbnb Dataset! You can let us know if something isn't clear at any one of these addresses : ap3772@columbia.edu (Ankit), sg3637@columbia.edu (Sarang) and aa4229@columbia.edu (Ankita). 
+Welcome to the Exploratory Analysis of the Airbnb Dataset! In this project, we aim to understand Airbnb rental landscape in New York City through exploratory analysis on the Airbnb dataset. Through static and interactive visualizations, we try to answer the below questions: 
 
-Here's a few pointers to keep in mind when running the code :
+* How do prices of listings vary by location?
+* How does the demand for Airbnb rentals fluctuate across the year and over years?
+* Are the demand and prices of the rentals correlated?
+* What are the different types of properties in NYC? Do they vary by neighborhood?
+* What localities in NYC are rated highly by guests?
+* What makes a host Super host?
+* Do regular hosts and super hosts have different cancellation and booking policies?
+* Are there any common themes that can be identified from the free-text section of the reviews? What aspects of the rental experience do people like and what aspects do they abhor?
 
-i). We are still in the process of uploading all data files. We're looking for ways to work around the max file size limit. 
+The data files that have been uploaded are compressed versions since they exceed Github's 100Mb limit. You'll need to extract these files before you run the code.
 
-ii). The data files that have been uploaded are compressed versions since they exceed Github's 100Mb limit. You'll need to extract these files before you run the code.
-
-We'll resolve these issues and complete a detailed write-up in a couple days tops. Keep Hacking!
+You can let us know if something isn't clear at any one of these addresses: ap3772@columbia.edu (Ankit), sg3637@columbia.edu (Sarang) and aa4229@columbia.edu (Ankita).Enjoy!
 
