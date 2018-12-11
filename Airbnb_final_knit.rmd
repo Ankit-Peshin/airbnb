@@ -28,7 +28,7 @@ We are a team of three - Ankit Peshin, Sarang Gupta, and Ankita Agrawal. We pres
 
 All of us had a deep sense of teamwork and communicated well with each other. We were successful in acknowledging and appreciating each other's efforts while at the same time corrected each other along the way. As a team, we invested a lot of time in discussing and brainstorming ideas - from selecting the dataset to compiling the final version of this report.
 
-The work was divided such that each of us worked on equally difficult and challenging tasks. To highlight a few contributions, Ankita worked on word cloud to derive meaning from customer reviews, led the development of the listings locator and was instrumental in giving a general structure to our analysis, making sense from the chaos. Ankit introduced word embeddings to analyze review data, and worked on the Shiny app to filter listings and another one to build a wordcloud of similar terms. Sarang produced a cool animation showing the rise in the number of Airbnb rentals in NYC over the years, and performed some interesting time-series investigation.
+The work was divided such that each of us worked on equally difficult and challenging tasks. To highlight a few contributions, Ankita worked on word cloud to derive meaning from customer reviews, led the development of the listings locator and along with Sarang was instrumental in giving a general structure to our analysis, making sense from the chaos. Ankit introduced word embeddings to analyze review data, and worked on the Shiny app to filter listings and another one to build a wordcloud of similar terms. Sarang produced a cool animation showing the rise in the number of Airbnb rentals in NYC over the years, and performed some interesting time-series investigation.
 
 Static visualizations were also distributed such that each one of us gets to work with the entire data set and thus be able to help with issues faced by other team members and accelerate productivity. It was a highly collaborative effort where our work went through a review process and Github's version control was convenient.
 
@@ -433,14 +433,11 @@ wordcloud(words = wordDF$text,
           max.words=500, colors = c("#e06f69","#357b8a", "#7db5b8", "#59c6f3"))
 ```
 
-####Building Word Vectors from Reviews
+####Comment Analysis Using Word Cloud
 
-The word cloud generated previously does a good job of finding what customers are looking for, but it is very generic. Wouldn't it be great if we could find what people think of the room sizes? How about seeing what makes customers "uncomfortable"?
+Let us start first with looking at the dominant themes in the reviews; simply building a word cloud should solve this purpose. Wordclouds take a frequency count of the words in the corpus as input, and return a beautiful display of dominant (frequently occurring) words, with their size being proportional to their relative frequency. We have more than a million reviews, so we need to take a random sample of this data, in this case ~30k reviews. While the sampled dataset size may seem very small in comparison to the original, it serves our purpose well because we only need the generic words here. Future analysis on "positive" and "negative" reviews needs more data as we'll see in the next section.
 
-Well, not to worry; word vectors come to the rescue. Word vectors simply place any given word in an n-dimensional space; and the proximity of any two words in this vector space is proportional to their "similarity". We use the review data to construct such a vector space to build a word cloud of similar words, derive interesting insights. The first word cloud is for the word "uncomfortable". Words similar to "uncomfortable" are usually those that occur in conjunction with it frequently, i.e reasons for the discomfort. The word cloud shows just that - notice words like "cramped", "crowded","small", "stuffy" and 
-"cluttered" indicating that lack of space is one of the most common complaints. "Hot", "damp" and "cold" are some of the common temperature issues. "Dusty", "dirty" and "unclean" surroundings will prompt people to write negative feedback. Many feel "nervous","unsafe" and "stressful"; clearly a red flag for future tenants. So, as you can see, word vectors add so much more meaning to our analysis.
-
-Similarly, querying by the keyword "comfortable", we hope to see things that led to a positive experience. Prominently featured are words like "quiet", "walkable", "clean", "spotless", etc, again demostrating the importance of environment, location and cleanliness. Helpful "hosts" and "communication" lead to a comfortable. Cleanliness of linens and the bed size leave an decisive impression. 
+An analysis of the word cloud shows interesting trends; Location seems to be key, since the words "neighbourhood", "location", "area" are featured prominently in the word cloud. Transport options like "subway", "walk" also find frequent mention. Airbnbs are short term rentals, yet people seem to lay stress on the comfort aspect of their stay, words like "kitchen" tell us that many folks would rather cook than eat out. Availability of "Restaurants" close by find mention too. Bathrooms and Beds, as expected can be clear deal breakers if not in top condition. The word "Host" finds a lot of mention; indicating the important role that hosts play in shaping the Airbnb experience. 
 
 ```{r Review Analysis 3.2 Word Vector, echo=FALSE, message=FALSE, warning=FALSE}
 r = getOption("repos")
@@ -460,12 +457,6 @@ glove = GlobalVectors$new(word_vectors_size = 50, vocabulary = vocab, x_max = 10
 word_vectors = glove$fit_transform(tcm, n_iter = 20)
 word_vectors1 <- glove$components
 ```
-
-####Comment Analysis Using Word Cloud
-
-Let us start first with looking at the dominant themes in the reviews; simply building a word cloud should solve this purpose. Wordclouds take a frequency count of the words in the corpus as input, and return a beautiful display of dominant (frequently occurring) words, with their size being proportional to their relative frequency. We have more than a million reviews, so we need to take a random sample of this data, in this case ~30k reviews. While the sampled dataset size may seem very small in comparison to the original, it serves our purpose well because we only need the generic words here. Future analysis on "positive" and "negative" reviews needs more data as we'll see in the next section.
-
-An analysis of the word cloud shows interesting trends; Location seems to be key, since the words "neighbourhood", "location", "area" are featured prominently in the word cloud. Transport options like "subway", "walk" also find frequent mention. Airbnbs are short term rentals, yet people seem to lay stress on the comfort aspect of their stay, words like "kitchen" tell us that many folks would rather cook than eat out. Availability of "Restaurants" close by find mention too. Bathrooms and Beds, as expected can be clear deal breakers if not in top condition. The word "Host" finds a lot of mention; indicating the important role that hosts play in shaping the Airbnb experience. 
 
 ####Building Word Vectors from Reviews
 
@@ -630,7 +621,13 @@ The Airbnb dataset provides us with a fantastic source to better understand New 
 </video>
 
 
-#####Location,Location,Location!
+#####Demand and Supply : Airbnb Customer Growth vs Listing Prices over time
+
+While there is an overall increasing trend for both customer numbers and listing prices, some very interesting seasonal patterns present themselves. The number of customer reviews written at a given timestamp are a good indicator of the demand around that time. As the adopters of Airbnb increase, one would expect the number of reviews to also increase through Jan to Dec every year, however we notice an interesting trend. The number of reviews coming in tend to peak around October every year and there is a marked drop towards the year end. The Holidays seem to be a reasonable explanation for this decline. Listing prices on the other hand increase from January through April where they plateau until November. The year end sees a sudden uptick in prices of around 12% by New Year. This gain is negated within a few days into January.
+
+Talking about weekly trends, the prices remain fairly constant through the week days and marginally increase around the weekend.
+
+#####Location,Location,Location! : Understanding New York's Real Estate scene  
 
 They say there are three things that matter in property; Location, location and location. And we're here to say YES. Highly rated locations also tend to be the most expensive ones. Again downtown Manhattan and adjacent areas of Brooklyn receive the highest location scores, with East Village being an exception. A marked drop in location scores is seen as the subway lines end. 
 
@@ -638,7 +635,19 @@ The listing costs are largely in line with the Location scores. It is however in
 i). *Find high rating - low rent regions (best of both worlds)* : The State Park region in Staten Island (discussed in the previous graph) is one such region where rents tend to be fairly low despite having the highest location rating. Another such sweet-spot lies to the North East of Brooklyn.
 ii). *Find low rating - high rent regions (worst of both worlds)* : The Elm Park region of Staten Island has disproportionately high rents, yet very low location scores. Other such locations can be found towards the Northern Bronx regions.
 
+#####Getting into the Customer's Head : Analyzing Customer Reviews
 
+Understanding your customers is key to running a successful business. The customer reviews can provide a wealth of information if mined properly. Some dominant positive themes that made people "comfortable" were cleanliness, the neighbourhood and if certain places were "walkable". "Hosts" and "communication" feature prominently, and bed-sheets and linens leave a decisive impression if unclean. Similarly, a few themes weren't pleasurable for the guest are room size (described by "small","stuffy","claustrophobic"), temperature/heating issues ("cold","hot","damp") and safety issues ("nervous","unsafe","stressful"),
+
+Our tool built in RShiny also allows us to query terms to find dominant associated themes. For instance, a search for "linens" returned descriptors such as “stained”, smelled” (negatives), and others such as “crisp”, “fluffy”, “spotless”, “new”, “comfy”, “fresh”, etc. (positives).
+
+#####Hosts with Super Powers! : Analyzing what it takes to become a Superhost
+
+Airbnb awards the title of “Superhost” to a small fraction of its dependable hosts. This is designed as an incentive program that is a win-win for both the host, Airbnb, and their customers. The superhost gets more business in the form of higher bookings, the customer gets improved service and Airbnb gets happy satisfied customers.
+
+But what does it take to be a Superhost? Airbnb’s site has a set of requirements that must be fulfilled in order to become one. Maintaining a review rate above 50%, a response rate above 90%, etc. Our findings, while mostly in line with the Airbnb's guidelines, also show some interesting outliers.While most super-hosts are in the high-rating:high-response-rate region, we can also see a few hosts with response rates less than 75% (which violates the 90%+ critera set by Airbnb). This is a very small fraction of the hosts. In terms of Ratings, almost all hosts are rated 80% and above.
+
+With that being said, most Airbnb hosts lie in the high-rating:high-response region, but only a small fraction get to be super hosts. So clearly, becoming a Superhost takes a lot more than high ratings & response rates.
 
 
 ***
