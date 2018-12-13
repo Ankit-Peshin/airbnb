@@ -14,6 +14,7 @@ Welcome to the Exploratory Analysis of the Airbnb Dataset! In this project, we a
 The data files that have been uploaded are compressed versions since they exceed Github's 100Mb limit. You'll need to extract these files before you run the code.
 
 Here you'll find the shiny apps created :
+
 i). Wordcloud Generator : https://ankitpeshin.shinyapps.io/wordcloud_generator/
 ii). Filtered Listings Locator : https://ankitpeshin.shinyapps.io/listings/
 
