@@ -16,6 +16,7 @@ The data files that have been uploaded are compressed versions since they exceed
 Here you'll find the shiny apps created :
 
 i). Wordcloud Generator : https://ankitpeshin.shinyapps.io/wordcloud_generator/
+
 ii). Filtered Listings Locator : https://ankitpeshin.shinyapps.io/listings/
 
 You can let us know if something isn't clear at any one of these addresses: ap3772@columbia.edu (Ankit), sg3637@columbia.edu (Sarang) and aa4229@columbia.edu (Ankita).Enjoy!
